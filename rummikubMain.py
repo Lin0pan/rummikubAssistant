@@ -22,7 +22,6 @@ def rows(s):
     r = []
     while len(l) > 0:
         a = row(l)
-        print(a)
         r = r + [a[-2]]
         l = a[-1]
 
@@ -32,6 +31,26 @@ def rows(s):
             r.remove(x)
     return r, l
 
+def placeLeftover(t):
+    r = t[-2]
+    l = t[-1]
+    ln = l
+
+    if len(l) == 0:
+        return t
+
+    for x in r:
+        for i in range(3, len(x)-1):
+            ln = x[i:] + l
+            a = rows(ln)
+            if len(a[-1]) == 0:
+                r.remove(x)
+                x = x[:i]
+                r = r + [x]
+                return r + a[-2]
+
+    return t
+
 
 
 
@@ -40,9 +59,9 @@ def main():
     numberSet = list(x)
     #print(numberSet)
     a = rows(numberSet)
-    print ("gelegt: ")
-    print(a[-2])
-    print ("ueber")
-    print(a[-1])
+    print(a)
+
+    print("nach placeLeftover")
+    print(placeLeftover(a))
 
 main()
