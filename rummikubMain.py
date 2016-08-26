@@ -20,6 +20,7 @@ def row(s):
 def rows(s):
     l = s
     r = []
+    result = []
     while len(l) > 0:
         a = row(l)
         r = r + [a[-2]]
@@ -28,14 +29,16 @@ def rows(s):
     for x in r:
         if len(x) < 3:
             l = l + x
-            r.remove(x)
-    return r, l
+        else:
+            result = result + [x]
+
+    return result, l
 
 def placeLeftover(t):
     r = t[-2]
     l = t[-1]
     ln = l
-
+    lnn = []
     if len(l) == 0:
         return t
 
@@ -47,7 +50,13 @@ def placeLeftover(t):
                 r.remove(x)
                 x = x[:i]
                 r = r + [x]
-                return r + a[-2]
+                r = r + a[-2]
+
+                for j in r:
+                    if len(j) < 3:
+                        lnn = lnn + j
+                        r.remove(j)
+                return r, lnn
 
     return t
 
@@ -55,13 +64,13 @@ def placeLeftover(t):
 
 
 def main():
-    x = input("bitte Zahlen mit Komma getrennt eingeben eingeben ")
-    numberSet = list(x)
-    #print(numberSet)
+    #x = input("bitte Zahlen mit Komma getrennt eingeben eingeben ")
+    #numberSet = list(x)
+    numberSet = [1,2,3,4,5,6,7,8,9,10,7,4]
     a = rows(numberSet)
-    print(a)
+    temp = a
+    for x in a[-1]:
+        temp = placeLeftover((temp[-2], [x]))
 
-    print("nach placeLeftover")
-    print(placeLeftover(a))
-
+    print(temp)
 main()
