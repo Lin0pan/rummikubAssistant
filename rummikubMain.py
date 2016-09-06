@@ -3,7 +3,7 @@ numberSet = []
 
 #returns row with smallest digit and leftover as tuple
 def row(s):
-
+    t=[]
     if len(s) == 0:
         return ([],[])
 
@@ -15,6 +15,36 @@ def row(s):
             r = r + [s[i]]
     for x in r:
         s.remove(x)
+
+#13-1 problem
+    if r[-1] == 13:
+        s.sort()
+        if len(s)>0 and s[0] == 1:
+            r = r + [s[0]]
+            s = s[1:]
+            for i in range(len(s)):
+                if s[i] - r[-1] == 1:
+                    r = r + [s[i]]
+                    t = t + [s[i]]
+    for x in t:
+        s.remove(x)
+    t=[]
+
+    if r[0] == 1:
+        s.sort(reverse=True)
+        if len(s)>0 and s[0] == 13:
+            r = [13] + r
+            t = t + [13]
+            for i in range(len(s)):
+                if s[i] - r[0] == 1:
+                    r = [s[i]] + r
+                    t = t + [s[i]]
+
+    for x in t:
+        s.remove(x)
+    t=[]
+    #end 13-1 problem
+
     return r, s
 
 #tries to concatenate leftover to one of the rows
@@ -43,6 +73,7 @@ def rows(s):
         a = row(l)
         r = r + [a[-2]]
         l = a[-1]
+
 
     for x in r:
         if len(x) < 3:
@@ -117,11 +148,7 @@ def finalRows(l):
 def main():
     #x = input("bitte Zahlen mit Komma getrennt eingeben eingeben ")
     #numberSet = list(x)
-
-    finalRows([1,2,3,4,5,3])
-    finalRows([1,2,3,2,3,4,3,4,5,4,5,6,5,6,7,6,7,8,7,8,9,10])
-    finalRows([1,2,3,4,5,6,7,8,5,6,3,4])
-    finalRows([1,2,3,4,5,4,3])
-    finalRows([1,2,3,4,5,4,3,4])
+    finalRows([5,6,7,8,9,10,11,12,13,1,2])
+    finalRows([1,1,1,2,2,2,13,13,13,3,4,5,6,7,8,5])
 
 main()
